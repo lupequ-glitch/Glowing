@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171719">
+<title>Glowing — Discover your vibe</title>
+<style>
+:root{--bg:#171719;--panel:#222225;--panel2:#29292e;--burg:#702d42;--green:#285c48;--blue:#294d78;--cream:#f1ebdd;--sand:#d8a77b;--muted:#aaa6a1;--line:#3b393b;--radius:20px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--cream);font:15px/1.5 "DM Sans",Inter,system-ui,sans-serif}
+button,input{font:inherit}button{cursor:pointer;border:0} .app{min-height:100vh;display:flex}
+.sidebar{width:245px;padding:28px 18px;border-right:1px solid var(--line);position:fixed;inset:0 auto 0 0;background:#19191b;display:flex;flex-direction:column;z-index:5}
+.brand{display:flex;align-items:center;gap:10px;font:600 27px Georgia,serif;letter-spacing:.2px;margin:2px 8px 34px}.brand-mark{width:32px;height:32px;border:1.5px solid var(--sand);border-radius:50%;display:grid;place-items:center;color:var(--sand);font-size:21px}
+.nav{display:grid;gap:7px}.nav button{color:var(--muted);background:transparent;text-align:left;padding:12px 14px;border-radius:12px;display:flex;gap:13px;align-items:center}.nav button.active,.nav button:hover{background:#30252a;color:var(--cream)}.nav .ico{width:20px;text-align:center;font-size:17px}
+.side-bottom{margin-top:auto;padding:15px 12px;background:linear-gradient(140deg,#2b2026,#1f2925);border:1px solid #46333a;border-radius:16px}.side-bottom small{color:var(--muted)}
+main{margin-left:245px;width:calc(100% - 245px);padding:30px clamp(20px,4vw,58px) 100px;max-width:1600px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}.greeting small,.eyebrow{color:var(--sand);letter-spacing:1.8px;text-transform:uppercase;font-size:10px;font-weight:700}.greeting h1{font:500 29px Georgia,serif;margin:4px 0}.top-actions{display:flex;align-items:center;gap:12px}.pill{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:9px 13px;color:var(--cream);font-size:12px}.avatar{width:38px;height:38px;border-radius:50%;background:var(--green);display:grid;place-items:center;font:18px Georgia}
+h2{font:500 25px Georgia,serif;margin:0 0 6px}h3{font:500 19px Georgia,serif;margin:0}p{color:var(--muted);margin:6px 0 0}.hero{background:linear-gradient(115deg,#542536 0%,#38232e 54%,#1f3930 100%);border:1px solid #62404b;border-radius:24px;padding:28px;min-height:210px;display:flex;justify-content:space-between;align-items:center;gap:20px;overflow:hidden;position:relative}.hero:after{content:"✦";font-size:190px;color:#ffffff0b;position:absolute;right:7%;top:-45px}.hero-copy{max-width:540px;position:relative;z-index:1}.hero h2{font-size:34px;max-width:460px;line-height:1.12;margin:9px 0}.hero p{max-width:430px;color:#e0d3d0}.hero-art{font-size:92px;color:#e6c6a7;opacity:.85;margin-right:5%;z-index:1}
+.btn{padding:11px 17px;border-radius:999px;background:var(--cream);color:#242124;font-weight:700;font-size:13px;margin-top:18px}.btn.secondary{background:transparent;border:1px solid #71666a;color:var(--cream)}.btn.green{background:var(--green);color:white}.section-head{display:flex;justify-content:space-between;align-items:end;margin:29px 0 14px}.text-link{background:none;color:var(--sand);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.tile{min-height:150px;border:1px solid var(--line);border-radius:18px;padding:17px;background:var(--panel);text-align:left;color:var(--cream);position:relative;overflow:hidden;transition:.2s}.tile:hover{transform:translateY(-3px);border-color:#78616a}.tile .emoji{font-size:27px;display:block;margin-bottom:16px}.tile strong{font:500 18px Georgia,serif;display:block}.tile small{color:var(--muted);display:block;margin-top:5px}.tile:after{content:"";position:absolute;width:110px;height:110px;border-radius:50%;right:-45px;top:-45px;background:#ffffff08}
+.row{display:grid;grid-template-columns:1.3fr 1fr;gap:15px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:19px}.trend-list{display:grid;gap:12px}.trend{display:flex;gap:12px;align-items:center}.trend-icon{width:43px;height:43px;border-radius:12px;background:#392b31;display:grid;place-items:center;font-size:20px}.trend div:nth-child(2){flex:1}.trend small{color:var(--muted)}.tag{font-size:10px;color:var(--sand);border:1px solid #57444a;padding:4px 8px;border-radius:999px}
+.page{display:none}.page.active{display:block}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.quiz-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;min-height:175px;display:flex;flex-direction:column}.quiz-card .emoji{font-size:29px}.quiz-card h3{margin-top:12px}.quiz-card p{font-size:12px}.quiz-card button{margin-top:auto;align-self:flex-start}
+.category-row{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.category-row button{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:8px 13px;font-size:12px}.category-row button.selected{background:#49303a;color:var(--cream);border-color:#76505d}
+.quiz-shell{max-width:690px;margin:10px auto;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:clamp(20px,4vw,34px)}.progress{height:5px;background:#3a393c;border-radius:9px;overflow:hidden;margin:15px 0 27px}.progress span{height:100%;display:block;background:var(--sand);width:25%;transition:.2s}.question{font:500 29px/1.2 Georgia,serif;margin:12px 0 8px}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:22px 0}.answer{background:#2d2c30;border:1px solid #464348;color:var(--cream);padding:15px;border-radius:14px;text-align:left}.answer.chosen{border-color:var(--sand);background:#3a2d32}.slider-block{margin:24px 0}.slider-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:9px}.slider-block input{width:100%;accent-color:var(--sand)}.slider-val{font-size:11px;color:var(--sand);text-align:right}
+.result-feature{background:linear-gradient(130deg,#3c2830,#263c34);border:1px solid #5a444a;border-radius:19px;padding:24px;margin:18px 0}.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.result-item{background:var(--panel2);border:1px solid var(--line);padding:16px;border-radius:15px}.result-item small{color:var(--sand)}.result-item p{font-size:12px}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:17px}.stat b{display:block;font:27px Georgia,serif}.stat small{color:var(--muted)}
+.friend{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.friend:last-child{border:0}.friend .avatar{flex:none}.friend div:nth-child(2){flex:1}
+input[type=text],input[type=password]{width:100%;padding:12px 14px;border-radius:12px;background:#19191b;border:1px solid var(--line);color:var(--cream);outline:none;margin:6px 0 13px}
+.profile-head{display:flex;align-items:center;gap:18px;background:linear-gradient(120deg,#30232a,#20342e);padding:24px;border-radius:20px}.profile-head .avatar{width:66px;height:66px;font-size:26px}
+.bottom-nav{display:none}
+.toast{position:fixed;bottom:25px;right:25px;background:var(--cream);color:#242124;padding:12px 17px;border-radius:12px;box-shadow:0 8px 30px #0006;z-index:20;font-size:13px}
+.modal-back{position:fixed;inset:0;background:#0009;display:none;place-items:center;padding:20px;z-index:30}.modal-back.show{display:grid}.modal{max-width:430px;width:100%;background:var(--panel);border:1px solid var(--line);padding:25px;border-radius:20px}
+.auth{position:fixed;inset:0;background:radial-gradient(circle at 70% 20%,#3b2931,#171719 60%);z-index:50;display:none;place-items:center;padding:20px}.auth.show{display:grid}.auth-card{width:min(420px,100%);background:#222225;border:1px solid #4a3a40;border-radius:24px;padding:30px}.auth-logo{text-align:center;font:34px Georgia,serif;margin-bottom:20px}.auth-logo span{color:var(--sand)}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.sidebar{display:none}main{margin:0;width:100%;padding:20px 16px 95px}.topbar{margin-bottom:19px}.greeting h1{font-size:25px}.hero{padding:22px;min-height:220px}.hero h2{font-size:28px}.hero-art{font-size:58px;margin:0}.grid{gap:10px}.tile{min-height:142px;padding:14px}.row{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#1c1c1f;border-top:1px solid var(--line);justify-content:space-around;padding:9px 4px calc(9px + env(safe-area-inset-bottom));z-index:10}.bottom-nav button{background:none;color:var(--muted);font-size:10px;display:grid;gap:3px;justify-items:center}.bottom-nav button.active{color:var(--sand)}.bottom-nav span{font-size:18px}.stat-grid{grid-template-columns:repeat(3,1fr)}.stat{padding:12px}.stat b{font-size:22px}.question{font-size:25px}}
+@media(max-width:390px){.hero-art{display:none}.cards{grid-template-columns:1fr}.answers{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><span class="brand-mark">✦</span> glowing</div>
+  <nav class="nav" id="sideNav">
+    <button class="active" data-page="home"><span class="ico">⌂</span>Home</button>
+    <button data-page="discover"><span class="ico">⌕</span>Discover</button>
+    <button data-page="ideas"><span class="ico">✧</span>Glowing Flow</button>
+    <button data-page="friends"><span class="ico">♧</span>Friends</button>
+    <button data-page="points"><span class="ico">♜</span>Glow Points</button>
+    <button data-page="profile"><span class="ico">◉</span>Profile</button>
+  </nav>
+  <div class="side-bottom"><b>✦ Your daily glow</b><br><small>Small discoveries make bright days.</small></div>
+</aside>
+<main>
+<header class="topbar">
+  <div class="greeting"><small id="dateLabel">YOUR SPACE</small><h1 id="pageTitle">Good afternoon ✦</h1></div>
+  <div class="top-actions"><span class="pill">✦ <b id="pointsTop">120</b> pts</span><button class="pill" onclick="toast('You’re all caught up!')">♧</button><div class="avatar" id="avatarTop">L</div></div>
+</header>
+
+<section class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-copy"><div class="eyebrow">A LITTLE SPARK OF INSPIRATION</div><h2>Turn your thoughts into something wonderful.</h2><p>Answer a few questions, explore your vibe and find ideas that feel like you.</p><button class="btn" onclick="startFlow()">Explore Glowing Flow ↗</button></div>
+    <div class="hero-art">✧</div>
+  </div>
+  <div class="section-head"><div><div class="eyebrow">MADE FOR YOUR MOOD</div><h2>Explore your vibe</h2></div><button class="text-link" onclick="showPage('discover')">See all →</button></div>
+  <div class="grid">
+    <button class="tile" onclick="startQuiz('series')"><span class="emoji">🎬</span><strong>What should I watch?</strong><small>Find your next series</small></button>
+    <button class="tile" onclick="startQuiz('books')"><span class="emoji">📚</span><strong>Your next read</strong><small>Books that match you</small></button>
+    <button class="tile" onclick="startQuiz('gift')"><span class="emoji">🎁</span><strong>Gift Finder</strong><small>Thoughtful ideas, made easy</small></button>
+    <button class="tile" onclick="startQuiz('diy')"><span class="emoji">🪡</span><strong>Creative weekend</strong><small>Find a new thing to make</small></button>
+  </div>
+  <div class="section-head"><div><div class="eyebrow">THE COMMUNITY LOVES</div><h2>Trending this week</h2></div></div>
+  <div class="row">
+    <div class="panel"><div class="trend-list">
+      <div class="trend"><div class="trend-icon">🪞</div><div><b>Find your room aesthetic</b><br><small>6 questions · Lifestyle</small></div><span class="tag">TRENDING</span></div>
+      <div class="trend"><div class="trend-icon">🎧</div><div><b>Your soundtrack today</b><br><small>5 questions · Music</small></div><span class="tag">NEW</span></div>
+      <div class="trend"><div class="trend-icon">🌷</div><div><b>What is your creative hobby?</b><br><small>7 questions · Creativity</small></div><span class="tag">POPULAR</span></div>
+    </div></div>
+    <div class="panel"><div class="eyebrow">YOUR PROGRESS</div><h2 style="margin-top:6px">Keep your glow going</h2><p>You're on a 5-day streak. A little curiosity goes a long way.</p><div style="font:32px Georgia;margin:15px 0">🔥 5 days</div><button class="btn secondary" onclick="showPage('points')">View progress</button></div>
+  </div>
+</section>
+
+<section class="page" id="page-discover">
+  <div class="eyebrow">FIND SOMETHING NEW</div><h2>Discover</h2><p>Little tests, big inspiration.</p>
+  <input type="text" id="searchTests" placeholder="Search tests, topics or moods…" oninput="filterTests()">
+  <div class="category-row" id="categories">
+    <button class="selected" onclick="setCategory('All',this)">All</button><button onclick="setCategory('Entertainment',this)">Entertainment</button><button onclick="setCategory('Lifestyle',this)">Lifestyle</button><button onclick="setCategory('Creativity',this)">Creativity</button><button onclick="setCategory('Personality',this)">Personality</button>
+  </div>
+  <div class="cards" id="testCards"></div>
+</section>
+
+<section class="page" id="page-ideas">
+  <div class="eyebrow">GLOWING FLOW</div><h2>Let’s find your next idea.</h2><p>No blank chat. Just a few thoughtful questions to find what fits.</p>
+  <div class="quiz-shell">
+    <div class="eyebrow">QUICK DISCOVERY</div><div class="question">What are you in the mood for?</div><p>Choose a path and Glowing will guide you with visual questions and sliders.</p>
+    <div class="answers">
+      <button class="answer" onclick="startQuiz('gift')">🎁 Find a gift</button>
+      <button class="answer" onclick="startQuiz('diy')">🎨 Make something</button>
+      <button class="answer" onclick="startQuiz('series')">🎬 Find something to watch</button>
+      <button class="answer" onclick="startQuiz('books')">📚 Find a book</button>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="page-quiz">
+  <button class="text-link" onclick="showPage('discover')">← Back to Discover</button>
+  <div class="quiz-shell" id="quizContent"></div>
+</section>
+
+<section class="page" id="page-results">
+  <div class="eyebrow">YOUR GLOWING RESULTS</div><h2 id="resultTitle">Your ideas are ready ✦</h2><p id="resultIntro">A few recommendations selected around your answers.</p>
+  <div class="result-feature"><div class="eyebrow">YOUR VIBE</div><h2 id="resultVibe">Thoughtful & creative</h2><p id="resultReason">You like ideas that feel personal, useful and a little unexpected.</p></div>
+  <div class="cards" id="resultCards"></div>
+  <button class="btn" onclick="showPage('discover')">Explore another test</button> <button class="btn secondary" onclick="toast('Result saved to your favourites!')">♡ Save results</button>
+</section>
+
+<section class="page" id="page-friends">
+  <div class="eyebrow">YOUR PEOPLE</div><h2>Friends</h2><p>Share the fun, compare the vibes — only when you choose to.</p>
+  <div class="panel" style="margin:20px 0"><b>Add a friend</b><div style="display:flex;gap:8px;margin-top:10px"><input id="friendName" type="text" placeholder="Enter username" style="margin:0"><button class="btn" style="margin:0" onclick="addFriend()">Add</button></div></div>
+  <div class="panel"><h3>Your circle</h3><div id="friendList">
+    <div class="friend"><div class="avatar">M</div><div><b>mia.m</b><br><small>Last active recently</small></div><span class="tag">FRIEND</span></div>
+    <div class="friend"><div class="avatar" style="background:#702d42">A</div><div><b>alex.r</b><br><small>Last active yesterday</small></div><span class="tag">FRIEND</span></div>
+  </div></div>
+  <div class="panel" style="margin-top:14px"><div class="eyebrow">FRIEND MATCH</div><h3>Compare your vibes</h3><p>Compare results you've both chosen to share.</p><button class="btn secondary" onclick="toast('Demo: choose a shared result to compare.')">Compare results</button></div>
+</section>
+
+<section class="page" id="page-points">
+  <div class="eyebrow">YOUR LITTLE WINS</div><h2>Glow Points</h2><p>Curiosity earns points. No pressure to keep a streak.</p>
+  <div class="stat-grid"><div class="stat"><b id="pointsBig">120</b><small>Total points</small></div><div class="stat"><b>5 🔥</b><small>Demo streak</small></div><div class="stat"><b>Level 2</b><small>Explorer</small></div></div>
+  <div class="panel"><div style="display:flex;justify-content:space-between"><b>Next level</b><small>120 / 200 XP</small></div><div class="progress"><span style="width:60%"></span></div><p>Complete a new test to earn 10 Glow Points.</p></div>
+  <div class="section-head"><h3>Your badges</h3></div><div class="grid"><div class="tile"><span class="emoji">🌱</span><strong>First Spark</strong><small>Completed your first test</small></div><div class="tile"><span class="emoji">🔥</span><strong>Curious streak</strong><small>5-day demo streak</small></div><div class="tile"><span class="emoji">🧭</span><strong>Explorer</strong><small>Trying new categories</small></div><div class="tile"><span class="emoji">✦</span><strong>Glow starter</strong><small>Welcome to Glowing</small></div></div>
+</section>
+
+<section class="page" id="page-profile">
+  <div class="eyebrow">YOUR CORNER</div><h2>Profile</h2>
+  <div class="profile-head"><div class="avatar" id="profileAvatar">L</div><div><h2 id="profileName">lucia.glow</h2><p>Curious mind · Creative soul</p><small style="color:var(--sand)">✦ Level 2 Explorer</small></div></div>
+  <div class="stat-grid"><div class="stat"><b id="profilePoints">120</b><small>Glow Points</small></div><div class="stat"><b>18</b><small>Tests tried</small></div><div class="stat"><b>5</b><small>Day streak</small></div></div>
+  <div class="panel"><h3>Account settings</h3><p>Demo profile settings. A real account system will be connected in a later build.</p><button class="btn secondary" onclick="openAuth()">Switch demo account</button> <button class="btn secondary" onclick="toast('Demo preferences saved.')">Preferences</button></div>
+  <div class="panel" style="margin-top:14px"><h3>Saved discoveries</h3><p>Your saved tests and recommendations will appear here.</p></div>
+</section>
+</main>
+</div>
+
+<nav class="bottom-nav" id="bottomNav">
+  <button class="active" data-page="home"><span>⌂</span>Home</button><button data-page="discover"><span>⌕</span>Discover</button><button data-page="ideas"><span>✧</span>Flow</button><button data-page="friends"><span>♧</span>Friends</button><button data-page="profile"><span>◉</span>Profile</button>
+</nav>
+
+<div class="auth" id="auth">
+  <div class="auth-card"><div class="auth-logo"><span>✦</span> glowing</div><div class="eyebrow" style="text-align:center">YOUR SPACE TO DISCOVER</div><h2 style="text-align:center;margin:8px 0 18px">Welcome to Glowing</h2><label>Username</label><input id="username" type="text" placeholder="Choose a username" value="lucia.glow"><label>Password</label><input id="password" type="password" placeholder="Create a password" value="glowingdemo"><small style="color:var(--muted)">Demo only — don't use a real password here.</small><button class="btn" style="width:100%" onclick="login()">Enter Glowing ↗</button><p style="text-align:center;font-size:11px">Account recovery can be added with a verified recovery method in the production version.</p></div>
+</div>
+<div class="modal-back" id="modal"><div class="modal"><button class="text-link" style="float:right" onclick="closeModal()">✕</button><div id="modalBody"></div></div></div>
+
+<script>
+const tests=[
+ {id:'gift',cat:'Lifestyle',emoji:'🎁',title:'Gift Finder',desc:'Find a thoughtful gift for someone special.'},
+ {id:'series',cat:'Entertainment',emoji:'🎬',title:'What should I watch?',desc:'Find a series that matches your mood.'},
+ {id:'books',cat:'Entertainment',emoji:'📚',title:'Your next read',desc:'Discover books that fit your taste.'},
+ {id:'diy',cat:'Creativity',emoji:'🪡',title:'Creative weekend',desc:'Find a new project to make.'},
+ {id:'room',cat:'Lifestyle',emoji:'🪞',title:'Room aesthetic',desc:'Discover a room style that feels like you.'},
+ {id:'personality',cat:'Personality',emoji:'✨',title:'Your creative energy',desc:'Explore how you like to express yourself.'}
+];
+let currentCategory='All',currentTest='gift',step=0,answers={},points=120,username='lucia.glow';
+const questionSets={
+ gift:[
+  {q:'Who are you shopping for?',sub:'We’ll tailor the ideas to them.',opts:['Best friend','Partner','Parent','Sibling','Someone else']},
+  {q:'What is their style?',sub:'Choose the closest match.',opts:['Minimal & simple','Vintage & artsy','Trendy & bold','Cozy & cute']},
+  {q:'What kind of gift feels right?',sub:'Pick the feeling you want to give.',opts:['Something useful','Something personal','An experience','A little surprise']},
+  {q:'What is your budget?',sub:'Choose a comfortable range.',opts:['Under €10','€10–20','€20–40','€40+']},
+  {q:'How original should it be?',sub:'Move the slider to set your preference.',slider:['Classic','Unexpected']},
+  {q:'How decorative should it feel?',sub:'A little detail can make it special.',slider:['Practical','Beautiful']},
+ ],
+ series:[
+  {q:'What mood are you in?',sub:'Choose the mood for your next watch.',opts:['Comforting & light','Mysterious','Emotional','Funny','Full of adventure']},
+  {q:'What pace do you prefer?',sub:'Move the slider.',slider:['Slow & cozy','Fast & intense']},
+  {q:'How much drama?',sub:'Move the slider.',slider:['A little','A lot']},
+  {q:'What matters most?',sub:'Pick one.',opts:['Characters','Plot twists','Beautiful visuals','Humour']}
+ ],
+ books:[
+  {q:'What do you want to feel?',sub:'Choose your reading mood.',opts:['Inspired','Transported to another world','Moved','Curious']},
+  {q:'Which world sounds best?',sub:'Pick your favourite.',opts:['Contemporary life','Fantasy','Mystery','Historical']},
+  {q:'How intense should it be?',sub:'Move the slider.',slider:['Easy & relaxing','Deep & gripping']},
+  {q:'How long a read?',sub:'Choose what suits you.',opts:['Short','Medium','Long']}
+ ],
+ diy:[
+  {q:'What would you like to create?',sub:'Pick the kind of project.',opts:['Room decor','Wearable accessories','Paper & journaling','Something handmade as a gift']},
+  {q:'How much time do you have?',sub:'Choose your project window.',opts:['Under 30 minutes','An afternoon','A whole weekend']},
+  {q:'What style do you like?',sub:'Move the slider.',slider:['Minimal','Colourful']},
+  {q:'How crafty are you feeling?',sub:'Move the slider.',slider:['Beginner-friendly','Ready for a challenge']}
+ ],
+ room:[
+  {q:'Choose a room mood.',sub:'What feels most like home?',opts:['Warm & cozy','Clean & minimal','Eclectic & colourful','Natural & calm']},
+  {q:'How bold should it be?',sub:'Move the slider.',slider:['Subtle','Statement']},
+  {q:'Which details do you love?',sub:'Pick one.',opts:['Soft lighting','Plants','Art & prints','Textiles']},
+  {q:'What is your budget?',sub:'Choose a comfortable range.',opts:['Low-cost refresh','€20–50','€50–100','Flexible']}
+ ],
+ personality:[
+  {q:'How do you get inspired?',sub:'Pick what feels natural.',opts:['Being around people','Quiet time','Trying new things','Making things']},
+  {q:'How do you approach ideas?',sub:'Move the slider.',slider:['Plan carefully','Go with the flow']},
+  {q:'What do you value most?',sub:'Choose one.',opts:['Originality','Connection','Learning','Self-expression']},
+  {q:'What sounds like a good day?',sub:'Choose your vibe.',opts:['Exploring somewhere new','Creating at home','Seeing friends','Getting lost in a story']}
+ ]
+};
+const recs={
+ gift:[['A mini jewellery dish','A pretty ceramic tray for rings and everyday accessories.','€10–18'],['A curated hair accessory set','Clips, ribbons or scrunchies chosen around their style.','€10–16'],['A small framed photo','Make it personal with a favourite shared memory.','€10–15'],['A decorative candle','A cosy accent that also looks lovely on a shelf.','€10–18'],['A patterned scarf','A versatile fashion detail for bags, hair or outfits.','€12–20'],['A mini room refresh kit','A small print, clips and a decorative detail together.','€12–20']],
+ series:[['Heartstopper','A warm, character-led story with a gentle feel.','Feel-good'],['Wednesday','A playful mystery with a darker visual style.','Mystery'],['Anne with an E','A heartfelt period drama full of imagination.','Drama'],['A Series of Unfortunate Events','Quirky, mysterious and visually distinctive.','Adventure']],
+ books:[['The House in the Cerulean Sea','A comforting fantasy with warmth and found-family themes.','Fantasy'],['The Midnight Library','A reflective story about choices and possibilities.','Contemporary'],['The Hobbit','A classic adventure into an imaginative world.','Fantasy'],['The Inheritance Games','A puzzle-filled mystery with a fast pace.','Mystery']],
+ diy:[['Personalised scrapbook','Turn photos and little memories into a keepsake.','Easy'],['Decorated trinket dish','Customise a small dish with a colour palette you love.','Easy'],['Beaded phone charm','Create a colourful accessory with beads and letters.','Beginner'],['Mini moodboard wall','Collect prints, colours and images for your space.','Easy']],
+ room:[['Warm lighting corner','Use a small lamp or warm fairy lights to soften a space.','Cozy'],['Gallery wall','Mix prints, postcards and personal photographs.','Creative'],['Natural textures','Bring in woven baskets, wood and soft fabrics.','Calm'],['Colour accent shelf','Style a shelf with a few objects in a shared palette.','Bold']],
+ personality:[['Creative explorer','You get energy from discovering and experimenting.','Your vibe'],['Thoughtful curator','You enjoy shaping details into something personal.','Your vibe'],['Social spark','Connection and shared experiences inspire you.','Your vibe'],['Quiet visionary','You often find your best ideas in calm moments.','Your vibe']]
+};
+function showPage(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));let el=document.getElementById('page-'+page);if(el)el.classList.add('active');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));let titles={home:'Good afternoon ✦',discover:'Discover something new',ideas:'Find your next idea',friends:'Your people',points:'Your progress',profile:'Your Glowing profile',quiz:'A little discovery',results:'Your results'};document.getElementById('pageTitle').textContent=titles[page]||'Glowing';window.scrollTo(0,0)}
+document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+function renderTests(){let list=tests.filter(t=>(currentCategory==='All'||t.cat===currentCategory)&&(`${t.title} ${t.desc}`.toLowerCase().includes((document.getElementById('searchTests')?.value||'').toLowerCase())));document.getElementById('testCards').innerHTML=list.map(t=>`<article class="quiz-card"><div class="emoji">${t.emoji}</div><small class="eyebrow">${t.cat}</small><h3>${t.title}</h3><p>${t.desc}</p><button class="text-link" onclick="startQuiz('${t.id}')">Take the test →</button></article>`).join('')||'<p>No tests found. Try another search.</p>'}
+function setCategory(c,b){currentCategory=c;document.querySelectorAll('#categories button').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');renderTests()}
+function filterTests(){renderTests()}
+function startQuiz(id){currentTest=id;step=0;answers={};showPage('quiz');renderQuestion()}
+function startFlow(){showPage('ideas')}
+function renderQuestion(){let qs=questionSets[currentTest]||questionSets.gift,q=qs[step],pct=Math.round(step/qs.length*100),html=`<div class="eyebrow">${(tests.find(t=>t.id===currentTest)||tests[0]).title.toUpperCase()} · QUESTION ${step+1} OF ${qs.length}</div><div class="progress"><span style="width:${pct}%"></span></div><div class="question">${q.q}</div><p>${q.sub}</p>`;
+if(q.opts){html+=`<div class="answers">${q.opts.map((o,i)=>`<button class="answer ${answers[step]===o?'chosen':''}" onclick="chooseAnswer('${o.replace(/'/g,"\\'")}')">${o}</button>`).join('')}</div>`}
+else{let val=answers[step]??50;html+=`<div class="slider-block"><div class="slider-labels"><span>${q.slider[0]}</span><span>${q.slider[1]}</span></div><input type="range" min="0" max="100" value="${val}" oninput="document.getElementById('sliderVal').textContent=this.value+'%';answers[step]=Number(this.value)"><div class="slider-val" id="sliderVal">${val}% toward ${q.slider[1].toLowerCase()}</div></div>`}
+html+=`<div style="display:flex;justify-content:space-between;align-items:center"><button class="text-link" onclick="prevQuestion()">← Back</button><button class="btn" style="margin:0" onclick="nextQuestion()">${step===qs.length-1?'See my results':'Continue →'}</button></div>`;document.getElementById('quizContent').innerHTML=html}
+function chooseAnswer(v){answers[step]=v;renderQuestion()}
+function prevQuestion(){if(step>0){step--;renderQuestion()}else showPage('discover')}
+function nextQuestion(){if(answers[step]===undefined){toast('Choose an answer or move the slider first.');return}let qs=questionSets[currentTest];if(step<qs.length-1){step++;renderQuestion()}else showResults()}
+function showResults(){points+=10;document.getElementById('pointsTop').textContent=points;document.getElementById('pointsBig').textContent=points;document.getElementById('profilePoints').textContent=points;let title=(tests.find(t=>t.id===currentTest)||tests[0]).title;document.getElementById('resultTitle').textContent='Your '+title.toLowerCase()+' ideas are ready ✦';let vibe=currentTest==='gift'?'Thoughtful, stylish & personal':currentTest==='diy'?'Creative & hands-on':currentTest==='series'?'Curious & story-driven':currentTest==='books'?'Imaginative & reflective':'A thoughtful explorer';document.getElementById('resultVibe').textContent=vibe;document.getElementById('resultReason').textContent='Your answers point towards ideas that balance your preferences with a little inspiration. These are starting points — save the ones you love.';let items=recs[currentTest]||recs.gift;document.getElementById('resultCards').innerHTML=items.slice(0,6).map((r,i)=>`<article class="result-item"><small>IDEA 0${i+1} · ${r[2]}</small><h3 style="margin-top:7px">${r[0]}</h3><p>${r[1]}</p><button class="text-link" onclick="toast('Saved to your favourites!')">♡ Save idea</button></article>`).join('');showPage('results')}
+function addFriend(){let v=document.getElementById('friendName').value.trim();if(!v){toast('Enter a username first.');return}let d=document.createElement('div');d.className='friend';d.innerHTML=`<div class="avatar">${v[0].toUpperCase()}</div><div><b></b><br><small>Demo friend request sent</small></div><span class="tag">PENDING</span>`;d.querySelector('b').textContent=v;document.getElementById('friendList').appendChild(d);document.getElementById('friendName').value='';toast('Demo friend request added.')}
+function toast(msg){let t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2300)}
+function openAuth(){document.getElementById('auth').classList.add('show')}
+function login(){let v=document.getElementById('username').value.trim();if(!v){toast('Choose a username.');return}username=v;document.getElementById('profileName').textContent=v;document.getElementById('avatarTop').textContent=v[0].toUpperCase();document.getElementById('profileAvatar').textContent=v[0].toUpperCase();document.getElementById('auth').classList.remove('show');toast('Welcome to the Glowing demo!')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+document.getElementById('dateLabel').textContent=new Intl.DateTimeFormat('en',{weekday:'long',month:'long',day:'numeric'}).format(new Date()).toUpperCase();
+renderTests();
+setTimeout(()=>openAuth(),350);
+</script>
+</body>
+</html>
